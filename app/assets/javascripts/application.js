@@ -15,11 +15,11 @@
 
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require social-share-button
-//= require social-share-button/wechat
+
 //= require moment
 //= require bootstrap-datetimepicker
 //= require fullcalendar
 //= require notifyjs_rails
+//= require awesome-share-buttons
 
 //= require_tree .

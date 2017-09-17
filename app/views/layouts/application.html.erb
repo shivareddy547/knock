@@ -6,21 +6,25 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Knock4" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
-
-
-
     <%= csrf_meta_tags %>
   </head>
   <body>
     <header>
       <%= render 'layouts/navigation' %>
+      <div class="sticky-container">
+        <ul class="sticky">
+          <%= awesome_share_buttons("") %>
+        </ul>
+      </div>
     </header>
     <main role="main">
        <%= render 'layouts/messages' %>
        <%= yield %>
       <%#= social_share_button_tag("test", :url => "https://www.tripadeal.com.au/") %>
-
-
-    </main>
+   </main>
   </body>
 </html>
+<style>
+
+
+</style>

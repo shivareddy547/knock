@@ -55,7 +55,7 @@ gem 'rails_layout',:github=>"RailsApps/rails_layout"
 # gem 'bootstrap', '~> 4.0.0.alpha3.1'
 
 gem 'bootstrap-sass', '3.2.0.2'
-gem 'social-share-button'
+# gem 'social-share-button'
 gem 'twitter-bootstrap-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
@@ -76,3 +76,5 @@ gem 'font-awesome-rails'
 # gem 'gmaps-autocomplete-rails'
 
 # gem 'neo4j'
+
+gem 'awesome-share-buttons', github: 'evansobkowicz/awesome-share-buttons'
