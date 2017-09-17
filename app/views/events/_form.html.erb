@@ -14,7 +14,7 @@
       </div>
     </div>
   <% end %>
-
+    <%= f.hidden_field :user_id, :value => current_user.id %>
   <div class="form-group">
     <%= f.label :name, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
@@ -32,24 +32,39 @@
   <div class="form-group">
     <%= f.label :start_date, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :start_date,as: :datetime, :class => 'form-control' %>
+      <%#= @event.start_date.strftime('%d/%m/%Y %H:%M') %>
+      <%= f.text_field :start_date,as: :datetime,:value=>"#{@event.start_date.strftime('%d/%m/%Y %H:%M') if @event.start_date.present?}", :class => 'form-control' %>
     </div>
-    <%=f.error_span(:start_date) %>
+
   </div>
   <div class="form-group">
     <%= f.label :end_date, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :end_date, as: :datetime,:class => 'form-control' %>
+      <%= f.text_field :end_date, as: :datetime,:value=>"#{@event.end_date.strftime('%d/%m/%Y %H:%M') if @event.end_date.present?}",:class => 'form-control' %>
     </div>
     <%=f.error_span(:end_date) %>
   </div>
   <div class="form-group">
     <%= f.label :private, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.check_box :private, :class => 'form-control' %>
+      <%= f.check_box :private,:value=>@event.private, :class => 'form-control' %>
     </div>
     <%=f.error_span(:private) %>
   </div>
+    <% users = User.all.map{ |c| [c.email, "#{c.id}:#{c.class}"]} %>
+    <% groups = Group.all.map{ |c| [c.name, "#{c.id}:#{c.class}"]} %>
+
+
+    <div class="form-group">
+      <%= f.label :groups, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%#= f.select :user_ids, users+groups,:class => 'form-control'  %>
+        <%= f.select(:group_ids, users+groups,{:include_blank => true, :selected => @event.users.map(&:id)},{ :multiple => true, :size => 5 }) %>
+
+      </div>
+      <%=f.error_span(:groups) %>
+    </div>
+
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">

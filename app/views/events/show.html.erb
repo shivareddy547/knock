@@ -12,6 +12,8 @@
   <dd><%= @event.start_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:end_date) %>:</strong></dt>
   <dd><%= @event.end_date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:members) %>:</strong></dt>
+  <dd><%= (@event.users.map(&:email)  + @event.groups.map(&:name)).join(',') %></dd>
   <dt><strong><%= model_class.human_attribute_name(:private) %>:</strong></dt>
   <dd><%= @event.private %></dd>
 </dl>

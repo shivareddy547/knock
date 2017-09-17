@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = current_user.events
   end
 
   # GET /events/1
@@ -28,9 +28,12 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.start_date=event_params[:start_date]
     @event.end_date=event_params[:end_date]
+    @event.user_id=current_user.id
 
     respond_to do |format|
       if @event.save
+        create_notification @event
+        @event.update_users_groups(event_params[:group_ids])
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
@@ -40,13 +43,26 @@ class EventsController < ApplicationController
     end
   end
 
+  def create_notification(event)
+    User.all.each do |each_user|
+    return if each_user.id == current_user.id
+    Notification.create(user_id: each_user.id,
+                        notified_by_id: current_user.id,
+                        event_id: event.id,
+                        identifier: event.id,
+                        notice_type: "event")
+
+      end
+  end
+
+
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
     respond_to do |format|
 
       if @event.update(event_params)
-
+        @event.update_users_groups(event_params[:group_ids])
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
@@ -74,6 +90,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :start_date, :end_date, :private)
+      params.require(:event).permit(:name, :description, :start_date, :end_date, :private,:group_ids=>[])
     end
 end

@@ -1,10 +1,15 @@
 <div class="authform">
+  <%= image_tag(resource.profile.image.small.url) if resource.profile.present?  %>
   <h3>Edit <%= resource_name.to_s.humanize %></h3>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
+
     <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
+      <%#= f.select_field :interest_id, :autofocus => true, class: 'form-control' %>
+
+
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
@@ -27,6 +32,120 @@
         <%= f.password_field :current_password, class: 'form-control' %>
       </div>
     </fieldset>
+      <fieldset>
+        <p>You must enter your current password to make changes.</p>
+        <div class="form-group">
+          <%= f.label :interests %>
+          <%= f.select(:interests, Interest.all.collect {|u| [u.name, u.id]},{:include_blank => true, :selected => resource.interests.map(&:id)},{ :multiple => true, :size => 5 }) %>
+        </div>
+      </fieldset>
+
+
+      <%= f.fields_for :profile_attributes do |builder| %>
+          <%#= resource.profile.firstname %>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :firstname %>
+              <%= builder.text_field :firstname,:value=>"#{resource.profile.firstname if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :lastname %>
+              <%= builder.text_field :lastname,:value=>"#{resource.profile.lastname if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :town %>
+              <%= builder.text_field :town, :value=>"#{resource.profile.town if resource.profile.present?}",class: 'form-control' %>
+            </div>
+
+
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :date_of_birth %>
+              <%= builder.text_field :date_of_birth, :value=>"#{resource.profile.date_of_birth if resource.profile.present?}",class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :town %>
+              <%= builder.text_field :town,:value=>"#{resource.profile.town if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :postal_code %>
+              <%= builder.text_field :postal_code, :value=>"#{resource.profile.postal_code if resource.profile.present?}",class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :gender %>
+              <%= builder.text_field :gender, :value=>"#{resource.profile.gender if resource.profile.present?}",class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :about %>
+              <%= builder.text_area :about, :value=>"#{resource.profile.about if resource.profile.present?}",class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :languges_spoken %>
+              <%= builder.text_field :languges_spoken,:value=>"#{resource.profile.languges_spoken if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :education %>
+              <%= builder.text_field :education,:value=>"#{resource.profile.education if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :occupation %>
+              <%= builder.text_field :occupation, :value=>"#{resource.profile.occupation if resource.profile.present?}",class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :religion %>
+              <%= builder.text_field :religion,:value=>"#{resource.profile.religion if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :ethnicity %>
+              <%= builder.text_field :ethnicity,:value=>"#{resource.profile.ethnicity if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <p>You must enter your current password to make changes.</p>
+            <div class="form-group">
+              <%= builder.label :image %>
+              <%= builder.file_field :image,:name=>"user[profile_attributes][image]",class: 'form-control' %>
+              <%#= builder.text_field :ethnicity,:value=>"#{resource.profile.ethnicity if resource.profile.present?}", class: 'form-control' %>
+            </div>
+          </fieldset>
+
+      <% end %>
     <%= f.submit 'Update', :class => 'button right' %>
   <% end %>
 </div>

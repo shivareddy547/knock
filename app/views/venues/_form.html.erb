@@ -1,0 +1,116 @@
+<%= form_for @venue, :html => { :class => "form-horizontal venue" } do |f| %>
+
+  <% if @venue.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @venue.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:description) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :image, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.file_field :image, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:image) %>
+  </div>
+
+    <%= f.fields_for :location_attributes do |location| %>
+        <%= location.hidden_field :country,:value=>"#{@venue.location.country rescue nil}", class: 'form-control',:id=>"country" %>
+        <%= location.hidden_field :latitude,:value=>"#{@venue.location.latitude rescue nil}", class: 'form-control' %>
+        <%= location.hidden_field :longitude, :value=>"#{@venue.location.longitude rescue nil}",class: 'form-control' %>
+        <%= location.hidden_field :street_address,:value=>"#{@venue.location.street_address rescue nil}",:id=>"street_number", class: 'form-control' %>
+        <%= location.hidden_field :city,:value=>"#{@venue.location.city rescue nil}",:id=>"locality", class: 'form-control' %>
+        <%= location.hidden_field :state, :value=>"#{@venue.location.state rescue nil}",class: 'form-control',:id=>"administrative_area_level_1" %>
+        <%= location.hidden_field :zipcode,:value=>"#{@venue.location.zipcode rescue nil}", class: 'form-control',:id=>"postal_code" %>
+
+        <div class="form-group">
+          <%= location.label :location, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= location.text_field :location,:value=>"#{@venue.location.street_address rescue " "}", :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:location) %>
+        </div>
+
+
+    <% end %>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                venues_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
+
+
+<script>
+
+    var placeSearch, autocomplete;
+    var componentForm = {
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initMap() {
+        var input = document.getElementById('venue_location_attributes_location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            mylocation = autocomplete.getPlace();
+            $("#venue_location_attributes_latitude").val(mylocation.geometry.location.lat());
+            $("#venue_location_attributes_longitude").val(mylocation.geometry.location.lng());
+            $("#street_number").val(mylocation.formatted_address);
+            var place = autocomplete.getPlace();
+            console.log(place)
+
+            for (var component in componentForm) {
+                console.log(component)
+                document.getElementById(component).value = '';
+                document.getElementById(component).disabled = false;
+            }
+
+            // Get each component of the address from the place details
+            // and fill the corresponding field on the form.
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                console.log(3333333333333)
+                console.log(addressType)
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                }
+            }
+
+        });
+    }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFnYg5iKB5s9MK1Ld6cKmHlJA5QsUN3tQ&libraries=places&callback=initMap"
+        async defer></script>

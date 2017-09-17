@@ -1,0 +1,40 @@
+<%- model_class = Venue -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @venue.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @venue.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:image) %>:</strong></dt>
+  <dd><%#= @venue.image %>
+    <%= image_tag(@venue.image.medium.url) if @venue.image.url %>
+  </dd>
+  <% if @venue.location.present? %>
+
+      <dt><strong><%= model_class.human_attribute_name(:location_address) %>:</strong></dt>
+      <dd> <%= "#{@venue.location.city} #{@venue.location.state} #{@venue.location.zipcode} #{@venue.location.country}" %></dd>
+
+      <dt><strong><%= model_class.human_attribute_name(:street_address) %>:</strong></dt>
+      <dd> <%= "#{@venue.location.street_address}" %></dd>
+
+      <dt><strong><%= model_class.human_attribute_name(:latitude_longitude) %>:</strong></dt>
+      <dd> <%= "#{@venue.location.latitude} & #{@venue.location.longitude}" %> </dd>
+
+
+  <%end %>
+
+
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              venues_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_venue_path(@venue), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              venue_path(@venue),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
