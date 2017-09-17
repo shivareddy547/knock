@@ -52,6 +52,14 @@ Rails.application.configure do
       domain: 'localhost:3000'
   }
 
+#   config.neo4j.session.type = :http
+#   config.neo4j.session.url = 'http://localhost:24277'
+#
+# # Or, for embedded in jRuby
+#
+#   config.neo4j.session.type = :embedded
+#   config.neo4j.session.path = '/path/to/graph.db'
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

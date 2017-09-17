@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
-  get '/calendar' => 'calendar#index'
+  resources :groups
+  resources :venues
+  resources :interests
+  # get 'notifications/link_through'
 
+  get '/calendar' => 'calendar#index'
+  get 'notifications/:id/link_through', to: 'notifications#link_through',
+      as: :link_through
+  get '/notifications'=>"notifications#index"
   resources :events
   # resources :events
   # devise_for :users
   get 'static_pages/index'
 
   get 'static_page/index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -15,12 +23,22 @@ Rails.application.routes.draw do
   root 'static_pages#index'
 
   # devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+  # devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
-  # match '/calendar/events' => 'calendar#events', via: [:get], :as => :calendar_events
+  match '/terms_of_service' => 'static_pages#terms_of_service',via: [:get], :as => :terms_of_service
+  match '/privacy' => 'static_pages#privacy',via: [:get], :as => :privacy
+  match '/safety_guidelines' => 'static_pages#safety_guidelines',via: [:get], :as => :safety_guidelines
+  match '/contact' => 'static_pages#contact', via: [:get],:as => :contact
 
+
+  # match '/calendar/events' => 'calendar#events', via: [:get], :as => :calendar_events
+  devise_for :users, :controllers => {:registrations => "users/registrations",omniauth_callbacks: 'omniauth_callbacks'}
   resources :calendar do
     get :get_events, on: :collection
+  end
+
+  resources :users do
+    get :get_interests, :on => :collection
   end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

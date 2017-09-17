@@ -63,3 +63,16 @@ gem 'fullcalendar-rails'
 # gem 'momentjs-rails'
 
 gem 'notifyjs_rails'
+
+gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
+gem 'mini_magick'
+gem 'bootstrap-social-rails'
+gem 'font-awesome-rails'
+# gem 'rails4-autocomplete'
+# gem 'bootstrap_tokenfield_rails'
+# gem "jquery-rails"
+# gem 'gmaps-autocomplete',:path=>"gmaps-autocomplete"
+# gem 'jquery-rails'
+# gem 'gmaps-autocomplete-rails'
+
+# gem 'neo4j'
