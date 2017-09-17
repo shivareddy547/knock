@@ -89,7 +89,7 @@ Devise.setup do |config|
   # requests for sign in and sign up, you need to get a new CSRF token
   # from the server. You can disable this option at your own risk.
   # config.clean_up_csrf_token_on_authentication = true
-
+  config.secret_key = 'ae20d1030aadb8563c805ef2630697ab1b742f9e9b97061bb4747327a0644165054f112017904845a3bcbae391c1a73cdcff293ad4bb2bcdd4904d4d07d0b2b8'
   # When false, Devise will not attempt to reload routes on eager load.
   # This can reduce the time taken to boot the app but if your application
   # requires the Devise mappings to be loaded during boot time the application
