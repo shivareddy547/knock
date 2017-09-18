@@ -16,11 +16,11 @@ AwesomeShareButtons.configure do |config|
             <img src='/assets/social/#{name}-circle.png' width='32' height='32'>
             <p>"
 
-        link_title = t "awesome_share_buttons.share_to", :name => t("awesome_share_buttons.#{name.downcase}")
-        html << link_to(link_title,"#", {:rel => ["nofollow", rel],:target=>"_blank",                                                                                         "data-site" => name,
+        # link_title = t "awesome_share_buttons.share_to", :name => t("awesome_share_buttons.#{name.downcase}")
+        html << link_to("Share to #{name.downcase}","#", {:rel => ["nofollow", rel],:target=>"_blank",                                                                                         "data-site" => name,
                                                                                            :class => "awesome-share-buttons-#{name}",
                                                                                            :onclick => "return AwesomeShareButtons.share(this);",
-                                                                                           :title => h(link_title)}.merge(extra_data))
+                                                                                           :title => h("Share to #{name.downcase}")}.merge(extra_data))
       end
       html << "</p>
           </li>"
