@@ -3,13 +3,7 @@ AwesomeShareButtons.configure do |config|
   config.allow_sites = %w(twitter facebook google_plus )
 
   AwesomeShareButtons::Helper.module_eval do
-
-    # html << " <li>
-    #         <img src='assets/social/facebook-circle.png' width='32' height='32'>
-    #         <p><a href='https://www.facebook.com/codexworld' target=''_blank'>Like Us on<br>Facebook</a></p>
-    #       </li>"
-
-    def awesome_share_buttons(title = "", opts = {})
+     def awesome_share_buttons(title = "", opts = {})
       extra_data = {}
       rel = opts[:rel]
       html = []
