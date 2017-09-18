@@ -27,29 +27,29 @@
             <li><%= link_to 'EditAccount', edit_user_registration_path,:class=>"glyphicon glyphicon-user" %></li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle glyphicon glyphicon-bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notification (<b><%= current_user.notifications.count rescue 0 %></b>)</a>
+              <a href="#" class="dropdown-toggle glyphicon glyphicon-bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notification (<b><%= current_user.notifications.where(:read=>false).count rescue 0 %></b>)</a>
               <ul class="dropdown-menu notify-drop">
                 <div class="notify-drop-title">
                   <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6">Notifications (<b><%= current_user.notifications.count rescue 0 %></b>)</div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">Notifications (<b><%= current_user.notifications.where(:read=>false).count rescue 0 %></b>)</div>
                     <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="/notifications" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="tümü okundu."><i class="fa fa-dot-circle-o"></i></a></div>
                   </div>
                 </div>
                 <!-- end notify title -->
                 <!-- notify content -->
                 <div class="drop-content">
-                  <% current_user.notifications.each do |notification| %>
+                  <% current_user.notifications.where(:read=>false).each do |notification| %>
                       <% if notification.notice_type == "event" %>
                           <li>
                             <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="<%= Event.find(notification.identifier).image.url rescue "http://placehold.it/45x45"%>" alt=""></div></div>
                             <div class="col-md-9 col-sm-9 col-xs-9 pd-l0">
 
 
-                              <%= notification.notified_by.email %> Created <%= link_to "#{notification.notice_type}", events_path(notification.identifier).html_safe %>
+                              <%= notification.notified_by.email %> Created <%= link_to "#{Event.find(notification.identifier).name}", event_path(:id=>notification.identifier,:notification_read => "true",:notification_id=>notification.id).html_safe %>
                               <%#= notification.notice_type == "event" ? "#{notification.notified_by.email} created #{link_to "#{notification.notice_type}", events_path(notification.identifier)}.html_safe."  : "" %>
 
                               <!--<a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> -->
-                              <a href="<%= events_path(notification.identifier) %>" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                              <a href="<%= event_path(:id=>notification.identifier,:notification_read => "true",:notification_id=>notification.id) %>" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
 
                               <hr>
                               <p class="time"><%= time_ago_in_words(notification.created_at) unless notification.created_at.blank? %></p>
@@ -61,11 +61,11 @@
                             <div class="col-md-9 col-sm-9 col-xs-9 pd-l0">
 
 
-                              <%= notification.notified_by.email %> Created <%= link_to "#{notification.notice_type}", interests_path(notification.identifier).html_safe %>
+                              <%= notification.notified_by.email %> Created <%= link_to "#{Interest.find(notification.identifier).name}", interest_path(:id=>notification.identifier,:notification_read => "true",:notification_id=>notification.id).html_safe %> Interest.
                               <%#= notification.notice_type == "event" ? "#{notification.notified_by.email} created #{link_to "#{notification.notice_type}", events_path(notification.identifier)}.html_safe."  : "" %>
 
                               <!--<a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> -->
-                              <a href="<%= interests_path(notification.identifier) %>" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                              <a href="<%= interest_path(:id=>notification.identifier,:notification_read => "true",:notification_id=>notification.id) %>" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
 
                               <hr>
                               <p class="time"><%= time_ago_in_words(notification.created_at) unless notification.created_at.blank? %></p>

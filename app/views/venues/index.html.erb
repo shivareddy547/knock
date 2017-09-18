@@ -5,8 +5,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
+      <!--<th><%#= model_class.human_attribute_name(:name) %></th>-->
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:image) %></th>
       <th><%= model_class.human_attribute_name(:location_address) %></th>
@@ -19,8 +19,8 @@
   <tbody>
     <% @venues.each do |venue| %>
       <tr>
-        <td><%= link_to venue.id, venue_path(venue) %></td>
-        <td><%= venue.name %></td>
+        <td><%= link_to venue.name, venue_path(venue) %></td>
+        <!--<td><%#= venue.name %></td>-->
         <td><%= venue.description %></td>
         <td><%#= venue.image %>
           <%= image_tag(venue.image.small.url) if venue.image.url %>

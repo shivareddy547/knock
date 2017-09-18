@@ -10,6 +10,9 @@ class InterestsController < ApplicationController
   # GET /interests/1
   # GET /interests/1.json
   def show
+  if params[:notification_read]=="true"
+    read_notification(params[:notification_id])
+  end
   end
 
   # GET /interests/new
@@ -28,6 +31,7 @@ class InterestsController < ApplicationController
 
     respond_to do |format|
       if @interest.save
+        @interest.update(:user_id=>current_user.id)
         create_notification @interest
         format.html { redirect_to @interest, notice: 'Interest was successfully created.' }
         format.json { render :show, status: :created, location: @interest }

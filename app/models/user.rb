@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :events,dependent: :destroy
 
   has_many :notifications, dependent: :destroy
+  has_many :interests
 
   has_and_belongs_to_many :interests
   # has_and_belongs_to_many :interests, :class_name => "Interest", :join_table => "interests_users", :association_foreign_key => "user_id"

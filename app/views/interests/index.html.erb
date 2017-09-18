@@ -7,7 +7,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      <!--<th><%#= model_class.human_attribute_name(:id) %></th>-->
       <th><%= model_class.human_attribute_name(:image) %></th>
       <th><%= model_class.human_attribute_name(:cover_image) %></th>
 
@@ -18,9 +18,11 @@
   <tbody>
     <% @interests.each do |interest| %>
       <tr>
-        <td><%= interest.name %></td>
+        <td><%#= interest.name %>
+          <%= link_to interest.name, interest_path(interest) %>
+        </td>
         <td><%= interest.description %></td>
-        <td><%= link_to interest.id, interest_path(interest) %></td>
+        <!--<td><%= link_to interest.id, interest_path(interest) %></td>-->
         <td><%#= interest.image %>
           <%= image_tag(interest.image.small.url) if interest.image.url %>
         </td>
