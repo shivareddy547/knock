@@ -19,7 +19,7 @@ AwesomeShareButtons.configure do |config|
         extra_data = opts.select { |k, _| k.to_s.start_with?('data') } if name.eql?('tumblr')
 
         html << "<li>
-            <img src='assets/social/#{name}-circle.png' width='32' height='32'>
+            <img src='/assets/social/#{name}-circle.png' width='32' height='32'>
             <p>"
 
         link_title = t "awesome_share_buttons.share_to", :name => t("awesome_share_buttons.#{name.downcase}")

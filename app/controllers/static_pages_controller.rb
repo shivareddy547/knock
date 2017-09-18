@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+
+
   def index
   end
 
@@ -18,6 +20,11 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+
+
+  end
+
+  def dashboard
 
 
   end
